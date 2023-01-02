@@ -1,6 +1,5 @@
 package com.hashem.mousavi.beziercurves
 
-import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -36,10 +35,6 @@ fun CubicBezierCurve(
 
     val circleRadius = with(LocalDensity.current) { 10.dp.toPx() }
 
-    val animate = remember {
-        Animatable(initialValue = 0f)
-    }
-
     var draggedIndex by remember {
         mutableStateOf(-1)
     }
@@ -48,6 +43,9 @@ fun CubicBezierCurve(
         modifier = modifier
             .pointerInput(true) {
                 detectTapGestures(
+                    onTap = {
+                        draggedIndex = -1
+                    },
                     onPress = { offset ->
                         if (!points.contains(offset) && (points.size < 4)) {
                             onAddPoint(offset)
